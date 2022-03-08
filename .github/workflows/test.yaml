@@ -47,3 +47,5 @@ jobs:
 
       - name: Get values from spread sheet
         run: node src/index.js
+        env:
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
