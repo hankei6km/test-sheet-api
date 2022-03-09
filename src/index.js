@@ -27,6 +27,6 @@ async function main(auth) {
   }
 }
 const auth = new google.auth.GoogleAuth({
-  scopes: SCOPES,
+  // scopes: SCOPES,
 });
 main(auth);
