@@ -1,9 +1,11 @@
 import fs from "fs";
 import readline from "readline";
 import { google } from "googleapis";
+import { GoogleAuth } from "google-auth-library";
+import { JSONClient } from "google-auth-library/build/src/auth/googleauth";
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
-async function main(auth) {
+async function main(auth: GoogleAuth<JSONClient>) {
   const authClient = await auth.getClient();
 
   const sheets = google.sheets({ version: "v4", auth: authClient });
@@ -13,7 +15,7 @@ async function main(auth) {
       range: "Class Data!A2:E",
     });
     const rows = res.data.values;
-    if (rows.length) {
+    if (rows && rows.length) {
       console.log("Name, Major:");
       // Print columns A and E, which correspond to indices 0 and 4.
       rows.map((row) => {

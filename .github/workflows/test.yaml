@@ -45,7 +45,10 @@ jobs:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
+      - name: Build
+        run: npm run build
+
       - name: Get values from spread sheet
-        run: node src/index.js
+        run: node dist/index.js
         env:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
