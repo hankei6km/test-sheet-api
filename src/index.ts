@@ -44,6 +44,7 @@ async function main(auth: GoogleAuth<JSONClient>) {
     }
   } catch (err) {
     console.log("The API returned an error: " + err);
+    process.exit(1);
   }
 }
 const auth = new google.auth.GoogleAuth({
