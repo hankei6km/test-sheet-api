@@ -22,7 +22,7 @@ async function main(auth: GoogleAuth<JSONClient>) {
       insertDataOption: "INSERT_ROWS",
       resource: {
         majorDimension: "ROWS",
-        values: `now, ${now}, ${new Date(now).toString()}`,
+        values: [["now", now, new Date(now).toString()]],
       },
       auth: authClient,
     };
