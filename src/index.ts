@@ -10,9 +10,28 @@ async function main(auth: GoogleAuth<JSONClient>) {
 
   const sheets = google.sheets({ version: "v4", auth: authClient });
   try {
+    const spreadsheetId = process.env["SPREADSHEET_ID"];
+    const sheetName = "Data";
+
+    // スプレッドシートへ値を追加.
+    const now = Date.now();
+    const request = {
+      spreadsheetId,
+      range: `${sheetName}!A2:C`,
+      valueInputOption: "USER_ENTERED",
+      insertDataOption: "INSERT_ROWS",
+      resource: {
+        majorDimension: "ROWS",
+        values: `now, ${now}, ${new Date(now).toString()}`,
+      },
+      auth: authClient,
+    };
+    await sheets.spreadsheets.values.append(request);
+
+    // スプレッドシートから値を取得.
     const res = await sheets.spreadsheets.values.get({
-      spreadsheetId: process.env["SPREADSHEET_ID"],
-      range: "Data!A2:C",
+      spreadsheetId,
+      range: `${sheetName}!A2:C`,
     });
     const rows = res.data.values;
     if (rows && rows.length) {
@@ -23,38 +42,6 @@ async function main(auth: GoogleAuth<JSONClient>) {
     } else {
       console.log("No data found.");
     }
-    // https://stackoverflow.com/questions/48987861/google-sheets-api-append-method-last-on-top
-    const sheetId = 0;
-    const now = Date.now();
-    const request = {
-      spreadsheetId: process.env["SPREADSHEET_ID"],
-      resource: {
-        requests: [
-          {
-            insertRange: {
-              range: {
-                sheetId,
-                startRowIndex: 1,
-                endRowIndex: 2,
-              },
-              shiftDimension: "ROWS",
-            },
-          },
-          {
-            pasteData: {
-              data: `now, ${now}, ${new Date(now).toString()}`,
-              type: "PASTE_NORMAL",
-              delimiter: ",",
-              coordinate: {
-                sheetId,
-                rowIndex: 1,
-              },
-            },
-          },
-        ],
-      },
-    };
-    const addRes = await sheets.spreadsheets.batchUpdate(request);
   } catch (err) {
     console.log("The API returned an error: " + err);
   }
