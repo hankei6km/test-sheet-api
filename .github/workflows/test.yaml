@@ -51,4 +51,5 @@ jobs:
       - name: Get values from spread sheet
         run: node dist/index.js
         env:
+          # 外部から切り替えできるように secret にしてある.
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
