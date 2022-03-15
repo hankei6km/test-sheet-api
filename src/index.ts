@@ -1,5 +1,3 @@
-import fs from "fs";
-import readline from "readline";
 import { google } from "googleapis";
 import { GoogleAuth } from "google-auth-library";
 import { JSONClient } from "google-auth-library/build/src/auth/googleauth";
