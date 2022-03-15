@@ -48,7 +48,7 @@ jobs:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
-      - name: Get values from spread sheet
+      - name: Update spread sheet
         run: node dist/index.js
         env:
           # 外部から切り替えできるように secret にしてある.
