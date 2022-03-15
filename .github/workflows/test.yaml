@@ -2,8 +2,6 @@ name: test
 on:
   push:
   workflow_dispatch:
-  #schedule:
-  #  - cron: "3,23,43 * * * *"
 
 jobs:
   oidc:
